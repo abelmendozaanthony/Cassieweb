@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-_rfc$$evg3q&hmck@(rk+s)jmv4g&rq=+bj#4nmkubcgndta5y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cassieweb.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = []
+
 
 # Application definition
 
