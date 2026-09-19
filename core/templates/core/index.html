@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un año amándote — Casandra</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <script src="{% static 'core/js/main.js' %}"></script>
+</head>
+
+<body>
+
+    <!-- Pétalos flotando de fondo -->
+    <div class="petals-bg" id="petalsBg"></div>
+
+    <!-- HERO -->
+    <header class="hero">
+        <p class="hero-eyebrow">365 días</p>
+        <h1 class="hero-title">
+            <span class="line">Feliz año</span>
+            <span class="line">amandote mi dulce</span>
+            <span class="line hero-name">amor eres la mejor</span>
+        </h1>
+        <p class="hero-sub">Baja despacio, hay una flor esperándote mi vida ❤️.</p>
+        <div class="scroll-hint">
+            <span></span>
+        </div>
+    </header>
+
+    <!-- FORMACIÓN DE LA FLOR AL HACER SCROLL -->
+    <section class="flower-section" id="flowerSection">
+        <div class="flower-sticky">
+            <div class="flower-stage" id="flowerStage">
+                <!-- Los pétalos se generan por JS -->
+                <div class="flower-center"></div>
+            </div>
+            <p class="flower-caption" id="flowerCaption">Cada pétalo es un mes contigo mi amor</p>
+        </div>
+    </section>
+    <div class="background-glow"></div>
+
+    <div class="container_carru">
+        <header class="header-romantico">
+            <h1>Para el amor de mi vida</h1>
+            <p class="subtitulo">Te amo cada momento</p>
+        </header>
+
+        <!-- CARRUSEL 3D -->
+        <div class="carousel-container">
+            <div class="carousel-3d" id="carousel3D">
+                <!-- Imagen 1 -->
+                <div class="carousel-card">
+                    <img src="{% static 'core/img/chapter1.jpeg' %}""
+                        alt=" Momento especial 1">
+                    <div class="card-caption">
+                        <h3>Nuestros recuerdos</h3>
+                        <p>Cada instante a tu lado es mágico.</p>
+                    </div>
+                </div>
+                <!-- Imagen 2 -->
+                <div class="carousel-card">
+                    <img src="{% static 'core/img/chapter2.jpeg' %}" alt="Momento especial 2">
+                    <div class="card-caption">
+                        <h3>Mi lugar favorito</h3>
+                        <p>Es siempre junto a ti, te amo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mensaje-footer">
+            <p>💖 Eres lo mejor que me ha pasado en la vida 💖</p>
+        </div>
+    </div>
+    <!-- POEMA -->
+    <section class="poem-section">
+        <div class="poem-wrap">
+            <p class="poem-kicker">Para ti</p>
+            <div class="poem" id="poem">
+                <p>Casandra, un año ya se cuenta,<br>
+                    y aún se siente como el primer día,<br>
+                    cuando tu nombre se volvió mi calma,<br>
+                    y tu risa, mi mejor melodía.</p>
+
+                <p>Fuiste el amarillo entre tanto gris,<br>
+                    la flor que crece aunque no la riegue,<br>
+                    el motivo por el que sonrío al despertar,<br>
+                    y la razón por la que el tiempo no me pese.</p>
+
+                <p>Doce meses de aprender tu forma de amar,<br>
+                    de guardar tus gestos como quien guarda flores,<br>
+                    de elegirte despacio, sin apuro, sin dudar,<br>
+                    entre tantos días, tú siempre entre los mejores.</p>
+
+                <p>Y si el amor se mide en pequeños instantes,<br>
+                    yo ya tengo trescientos sesenta y cinco contigo,<br>
+                    y quiero mil más, y luego mil más adelante,<br>
+                    porque amarte, Casandra, es mi lugar favorito.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- RAZONES -->
+    <section class="reasons-section">
+        <h2 class="reasons-title">Un año, resumido en lo pequeño</h2>
+        <div class="reasons-garden" id="reasonsGarden">
+            <div class="reason">
+                <span class="reason-petal"></span>
+                <p>Por cómo hablas de tus sueños con los ojos brillando.</p>
+            </div>
+            <div class="reason">
+                <span class="reason-petal"></span>
+                <p>Por convertir los días comunes en días que recuerdo.</p>
+            </div>
+            <div class="reason">
+                <span class="reason-petal"></span>
+                <p>Por tu paciencia, incluso cuando no la merecía.</p>
+            </div>
+            <div class="reason">
+                <span class="reason-petal"></span>
+                <p>Por elegirme también en los días difíciles.</p>
+            </div>
+            <div class="reason">
+                <span class="reason-petal"></span>
+                <p>Por cada "buenos días" que se sintió como un abrazo.</p>
+            </div>
+            <div class="reason">
+                <span class="reason-petal"></span>
+                <p>Por ser el hogar que no sabía que estaba buscando.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CIERRE -->
+    <footer class="closing">
+        <div class="closing-flower" id="closingFlower"></div>
+        <h2 class="closing-title">Feliz primer año, mi amor te amo tanto por que eres el amor de mi vida</h2>
+        <p class="closing-text">Gracias por un año entero de quererte cada día un poco más.<br>Que sean muchos más los
+            que sigamos sumando.</p>
+        <button class="love-btn" id="loveBtn">Te amo</button>
+        <p class="signature">— Abel Anthonny Mendoza</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

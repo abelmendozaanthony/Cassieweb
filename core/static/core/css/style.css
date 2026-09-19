@@ -1,0 +1,624 @@
+/* ============================================
+   TOKENS
+   ============================================ */
+:root {
+    --magenta-deep: #9c1458;
+    --magenta: #d4147a;
+    --magenta-bright: #f0348f;
+    --magenta-soft: #ffd9ec;
+    --yellow: #ffd23f;
+    --yellow-soft: #fff3c4;
+    --yellow-deep: #f4a300;
+    --cream: #fff8f2;
+    --ink: #3a0f28;
+    --ink-soft: #7a3a5c;
+
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+        "Helvetica Neue", Arial, sans-serif;
+
+    --easing: cubic-bezier(.22, 1, .36, 1);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+body {
+    margin: 0;
+    font-family: var(--font);
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================
+   PÉTALOS DE FONDO (decorativos, flotando)
+   ============================================ */
+.petals-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.petal-float {
+    position: absolute;
+    top: -40px;
+    width: 14px;
+    height: 18px;
+    background: var(--yellow);
+    border-radius: 0 100% 0 100%;
+    opacity: 0.75;
+    animation: fall linear infinite;
+}
+
+.petal-float.magenta {
+    background: var(--magenta-bright);
+    border-radius: 100% 0 100% 0;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-5vh) translateX(0) rotate(0deg);
+    }
+
+    100% {
+        transform: translateY(105vh) translateX(var(--drift, 40px)) rotate(320deg);
+    }
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8vh 6vw;
+    background: radial-gradient(circle at 50% 20%, var(--magenta-soft) 0%, var(--cream) 62%);
+}
+
+.hero-eyebrow {
+    font-size: clamp(0.85rem, 1.4vw, 1rem);
+    letter-spacing: 0.08em;
+    color: var(--magenta);
+    font-weight: 600;
+    margin: 0 0 1.2rem;
+}
+
+.hero-title {
+    margin: 0;
+    font-weight: 700;
+    font-size: clamp(2.4rem, 8vw, 5.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+}
+
+.hero-title .line {
+    display: block;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: riseIn 0.9s var(--easing) forwards;
+}
+
+.hero-title .line:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.hero-title .line:nth-child(2) {
+    animation-delay: 0.35s;
+}
+
+.hero-title .line:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+@keyframes riseIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-name {
+    background: linear-gradient(100deg, var(--magenta-deep), var(--magenta-bright) 55%, var(--yellow-deep));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-sub {
+    margin-top: 1.6rem;
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    color: var(--ink-soft);
+    opacity: 0;
+    animation: riseIn 0.9s var(--easing) forwards;
+    animation-delay: 0.95s;
+}
+
+.scroll-hint {
+    margin-top: 3rem;
+    width: 26px;
+    height: 42px;
+    border: 2px solid var(--magenta);
+    border-radius: 20px;
+    opacity: 0;
+    animation: riseIn 0.9s var(--easing) forwards;
+    animation-delay: 1.15s;
+    position: relative;
+}
+
+.scroll-hint span {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    margin-left: -2.5px;
+    background: var(--magenta);
+    border-radius: 50%;
+    animation: scrollDot 1.6s ease-in-out infinite;
+}
+
+@keyframes scrollDot {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(16px);
+        opacity: 0;
+    }
+}
+
+/* ============================================
+   SECCIÓN DE LA FLOR (se arma con el scroll)
+   ============================================ */
+.flower-section {
+    position: relative;
+    z-index: 1;
+    height: 320vh;
+    background: linear-gradient(180deg, var(--cream), #fffdf7 40%, var(--cream));
+}
+
+.flower-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.flower-stage {
+    position: relative;
+    width: min(80vw, 420px);
+    height: min(80vw, 420px);
+}
+
+.flower-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 15%;
+    height: 15%;
+    transform: translate(-50%, -50%) scale(0);
+    background: radial-gradient(circle, var(--yellow) 0%, var(--yellow-deep) 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(244, 163, 0, 0.5);
+    transition: transform 0.4s var(--easing);
+    z-index: 5;
+}
+
+.petal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 22%;
+    height: 34%;
+    background: linear-gradient(160deg, var(--magenta-bright), var(--magenta-deep));
+    border-radius: 100% 100% 100% 0%;
+    transform-origin: 50% 100%;
+    will-change: transform;
+}
+
+.flower-caption {
+    margin-top: 2.4rem;
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    color: var(--ink-soft);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.6s var(--easing);
+}
+
+.flower-caption.visible {
+    opacity: 1;
+}
+
+/* ============================================
+   POEMA
+   ============================================ */
+.poem-section {
+    position: relative;
+    z-index: 1;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 14vh 6vw;
+    display: flex;
+    justify-content: center;
+}
+
+.poem-wrap {
+    max-width: 620px;
+    width: 100%;
+}
+
+.poem-kicker {
+    color: var(--yellow);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    margin-bottom: 1.4rem;
+    font-size: 1rem;
+}
+
+.poem p {
+    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    line-height: 1.75;
+    margin: 0 0 2rem;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.9s var(--easing), transform 0.9s var(--easing);
+}
+
+.poem p.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   RAZONES (jardín de motivos)
+   ============================================ */
+.reasons-section {
+    position: relative;
+    z-index: 1;
+    padding: 14vh 6vw;
+    background: var(--cream);
+}
+
+.reasons-title {
+    text-align: center;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    max-width: 720px;
+    margin: 0 auto 6vh;
+    color: var(--ink);
+}
+
+.reasons-garden {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3.2rem 2.4rem;
+}
+
+.reason {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s var(--easing), transform 0.8s var(--easing);
+}
+
+.reason.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reason-petal {
+    flex-shrink: 0;
+    margin-top: 0.3rem;
+    width: 16px;
+    height: 20px;
+    background: var(--yellow-deep);
+    border-radius: 0 100% 0 100%;
+}
+
+.reason p {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+}
+
+/* ============================================
+   CIERRE
+   ============================================ */
+.closing {
+    position: relative;
+    z-index: 1;
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10vh 6vw;
+    background: radial-gradient(circle at 50% 100%, var(--magenta-soft), var(--cream) 65%);
+}
+
+.closing-flower {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.closing-flower::before,
+.closing-flower::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+}
+
+.closing-flower::before {
+    background: var(--magenta-bright);
+    clip-path: polygon(50% 0%, 90% 35%, 75% 100%, 25% 100%, 10% 35%);
+    animation: spinSlow 12s linear infinite;
+}
+
+.closing-flower::after {
+    width: 22px;
+    height: 22px;
+    margin: auto;
+    background: var(--yellow);
+}
+
+@keyframes spinSlow {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.closing-title {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 1.2rem;
+}
+
+.closing-text {
+    color: var(--ink-soft);
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.65;
+    max-width: 520px;
+    margin: 0 0 2.6rem;
+}
+
+.love-btn {
+    font-family: var(--font);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(120deg, var(--magenta), var(--magenta-deep));
+    border: none;
+    padding: 0.95rem 2.6rem;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(212, 20, 122, 0.35);
+    transition: transform 0.25s var(--easing), box-shadow 0.25s var(--easing);
+}
+
+.love-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 14px 30px rgba(212, 20, 122, 0.45);
+}
+
+.love-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.signature {
+    margin-top: 2.4rem;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    font-style: italic;
+}
+
+.background-glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 105, 180, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+    z-index: -1;
+}
+
+.container_carru {
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 900px;
+}
+
+.header-romantico h1 {
+    font-size: 2.5rem;
+    color: #ffb6c1;
+    margin-bottom: 5px;
+    text-shadow: 0 0 15px rgba(255, 182, 193, 0.5);
+    animation: fadeInDown 1.2s ease-in-out;
+}
+
+.subtitulo {
+    font-size: 1.4rem;
+    color: #ff69b4;
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* --- CONTENEDOR DEL CARRUSEL 3D --- */
+.carousel-container {
+    perspective: 1000px;
+    width: 100%;
+    height: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.carousel-3d {
+    position: relative;
+    width: 300px;
+    height: 350px;
+    transform-style: preserve-3d;
+    /* Animación infinita rotando en 3D */
+    animation: rotar3D 12s infinite linear;
+}
+
+/* Tarjetas del carrusel (Colocadas una frente a otra en un círculo 3D) */
+.carousel-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 105, 180, 0.4);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 105, 180, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+/* Posicionamiento 3D de las 2 imágenes */
+.carousel-card:nth-child(1) {
+    transform: rotateY(0deg) translateZ(200px);
+}
+
+.carousel-card:nth-child(2) {
+    transform: rotateY(180deg) translateZ(200px);
+}
+
+.carousel-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.carousel-card:hover img {
+    transform: scale(1.05);
+}
+
+.card-caption {
+    padding: 15px;
+    background: rgba(15, 12, 27, 0.85);
+}
+
+.card-caption h3 {
+    font-size: 1.1rem;
+    color: #ffb6c1;
+    margin-bottom: 4px;
+}
+
+.card-caption p {
+    font-size: 0.9rem;
+    color: #ddd;
+}
+
+.mensaje-footer p {
+    font-size: 1.2rem;
+    color: #ff69b4;
+    text-shadow: 0 0 10px rgba(255, 105, 180, 0.4);
+    animation: latido 2s infinite ease-in-out;
+}
+
+/* --- ANIMACIONES --- */
+@keyframes rotar3D {
+    0% {
+        transform: rotateY(0deg);
+    }
+
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes latido {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.06);
+    }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 640px) {
+    .reasons-garden {
+        grid-template-columns: 1fr;
+    }
+
+    .flower-section {
+        height: 280vh;
+    }
+}
